@@ -65,7 +65,8 @@ var isWinner = function () {
     return rows;
   };
 
-  var buildHistory = function ();
+  var buildBoard = function (state) {
 
-  var history
+
+  }
 }
