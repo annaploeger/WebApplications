@@ -1,14 +1,17 @@
 
+/**Fill the array with empty spaces*/
+
 var baseState = function () {
   return [null, null, null, null, null, null, null, null, null, null,
   null, null, null, null, null, null, null, null, null, null,
   null, null, null, null, null]
 };
+
 var historyState = [];
 var currentState, turn;
 
 
-/**Check if there is a winner */
+/**Check if there is a winner*/
 
 var isWinner = function () {
 
@@ -27,12 +30,13 @@ var isWinner = function () {
     [4,8,12,16,20]
   ];
 
+  // Look, if there could be a winning combination
+
   var isWinner = wins.filter(function(win) {
     return (currentState[win[0]] && currentState[win[0]] === currentState[win[1]] && currentState[win[0]] === currentState[win[2]]);
   });
   
   return (isWinner.length > 0 ? currentState[isWinner[0][0] : false);
-
   };
 
   var isFirstInRow = function (id) {
@@ -44,11 +48,16 @@ var isWinner = function () {
   };
 
   var buildSquares = function (state, winner) {
+
     var rows = '';
+
+
     state.forEach(function (square, id) {
+
       var value = square ? square : '';
       var selected = square ? 'aria-pressed="true"' : '';
       var disabled = sqaure || winner ? ' disabled' : '';
+
 
       if(isFirstInRow(id)) {
         rows += '<tr>';
@@ -65,8 +74,80 @@ var isWinner = function () {
     return rows;
   };
 
+  var buildHistory = function() {
+
+    var history = '';
+
+    if(historyState.length > 0) {
+      history += '<h2>Game History</h2><ol>';
+      historyState.forEach(function (move, index) {
+        history += '<li><button data-history =" ' + move.toString() + '">Go to move # ' + (index + 1) + '</button></li>';
+      });
+      history += '</ol>';
+    }
+
+    return history;
+
+  };
+
   var buildBoard = function (state) {
 
+    var winner = isWinner();
 
-  }
-}
+    var rows = winner ? '<p><strong>' + winner + ' is the winner!</string></p>' : '';
+    rows += '<table><tbody>';
+    
+    rows += buildSquares(state, winner);
+    rows += '</tbody></table><p><button id="play again">Play Again</button></p>';
+
+    rows += buildHistory();
+
+    return rows;
+
+  };
+
+  var updateBoard = function (state) {
+
+    var board = document.querySelector('#board')
+    if(!board) return;
+    board.innerHTML = buildBoard(state || currentState);
+  };
+
+  var renderTurn = function (square) {
+
+    var selected = square.getAttribute('data-id');
+    if(!selected) return;
+
+    currentState[selected] = turn;
+    historyState.push(currentState.slice());
+    updateBoard();
+    turn = turn === 'X' ? 'O' : 'X';
+
+  };
+
+ /** Clears the board */
+
+  var resetBoard = function () {
+
+    currentState = baseState();
+    historyState = [];
+    turn = 'X';
+    updateBoard();
+  };
+
+  resetBoard();
+
+  /** Click function to set X or O*/
+
+  document.addEventListener('click', function (event) {
+
+    if (event.target.matches('.game-sqaure') && !event.target.hasAttribute('disabled')) {
+      renderTurn(event.target);
+    }
+
+
+    if (event.target.matches('[data-history]')) {
+     updateBoard(event.target.getAttribute('data-history').split(','));
+    }
+
+},false);
