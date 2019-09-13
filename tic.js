@@ -1,132 +1,187 @@
-
 /**Return start field*/
 
-var baseState = function () {
-  return [null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null]
+var baseState = function() {
+  return [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ];
 };
 
 var currentState, turn;
 
-
 /**Check if there is a winner*/
 
-var isWinner = function () {
-
+var isWinner = function() {
   var wins = [
-    [0,1,2,3,4],
-    [5,6,7,8,9],
-    [10,11,12,13,14],
-    [15,16,17,18,19],
-    [20,21,22,23,14],
-    [0,5,10,15,20],
-    [1,6,11,16,21],
-    [2,7,12,17,22],
-    [3,8,13,18,23],
-    [4,9,14,19,24],
-    [0,6,12,18,24],
-    [4,8,12,16,20]
+    [0, 1, 2, 3, 4],
+    [5, 6, 7, 8, 9],
+    [10, 11, 12, 13, 14],
+    [15, 16, 17, 18, 19],
+    [20, 21, 22, 23, 14],
+    [0, 5, 10, 15, 20],
+    [1, 6, 11, 16, 21],
+    [2, 7, 12, 17, 22],
+    [3, 8, 13, 18, 23],
+    [4, 9, 14, 19, 24],
+    [0, 6, 12, 18, 24],
+    [4, 8, 12, 16, 20]
   ];
 
   // Look, if there could be a winning combination
-  //???
 
   var isWinner = wins.filter(function(win) {
-    return (currentState[win[0]] && currentState[win[0]] === currentState[win[1]] && currentState[win[0]] === currentState[win[2]]);
+    return (
+      currentState[win[0]] &&
+      currentState[win[0]] === currentState[win[1]] &&
+      currentState[win[0]] === currentState[win[2]] &&
+      currentState[win[0]] === currentState[win[3]] &&
+      currentState[win[0]] === currentState[win[4]]
+    );
   });
 
-  //???
-  
-  return (isWinner.length > 0 ? currentState[isWinner[0][0] : false);
-  };
+  return isWinner.length > 0 ? currentState[isWinner[0][0]] : false;
+};
 
-  var isFirstInRow = function (id) {
-    return (id +1) % 5 === 1;
-  };
+/**
+ * @param return id
+ * Check first and last row */
 
-  varIsLastInRow = function(id) {
-    return(id+1) % 5 === 0;
-  };
+var isFirstInRow = function(id) {
+  if (id === 0 || id === 5 || id === 10 || id === 15 || id === 20) {
+    return id;
+  }
+};
 
-  var buildSquares = function (state, winner) {
+var isLastInRow = function(id) {
+  if (id === 4 || id === 9 || id === 14 || id === 24) {
+    return id;
+  }
+};
 
-    var rows = '';
+/** @param return the rows, to click on
+ * Build the field*/
 
+var buildSquares = function(state, winner) {
+  var rows = "";
 
-    state.forEach(function (square, id) {
+  /** Check how the partially field is marked */
 
-      var value = square ? square : '';
-      var selected = square ? 'aria-pressed="true"' : '';
-      var disabled = sqaure || winner ? ' disabled' : '';
+  state.forEach(function(square, id) {
+    var value = square ? square : "";
+    var selected = square ? 'aria-pressed="true"' : "";
+    var disabled = square || winner ? " disabled" : "";
 
+    if (isFirstInRow(id)) {
+      rows += "<tr>";
+    }
 
-      if(isFirstInRow(id)) {
-        rows += '<tr>';
-      }
+    /** Click on the fields */
 
-      rows += '<td><button class="board" data-id= "' + id + '"' + selected + disabled + '>' + value + '</button></td>';
+    rows +=
+      '<td><button class="game-sqaure" data-id= "' +
+      id +
+      '"' +
+      selected +
+      disabled +
+      ">" +
+      value +
+      "</button></td>";
 
-      if(isLastRow(id)) {
-        rows += '</tr>';
-      }
+    if (isLastInRow(id)) {
+      rows += "</tr>";
+    }
+  });
 
-    });
+  return rows;
+};
 
-    return rows;
-  };
+/**Build the table and the play again button */
 
+var buildBoard = function(state) {
+  var winner = isWinner();
 
-  var buildBoard = function (state) {
+  var rows = winner
+    ? "<p><strong>" + winner + " is the winner!</string></p>"
+    : "";
+  rows += "<table><tbody>";
 
-    var winner = isWinner();
+  rows += buildSquares(state, winner);
+  rows += '</tbody></table><p><button id="play-again">Play Again</button></p>';
 
-    var rows = winner ? '<p><strong>' + winner + ' is the winner!</string></p>' : '';
-    rows += '<table><tbody>';
-    
-    rows += buildSquares(state, winner);
-    rows += '</tbody></table><p><button id="play again">Play Again</button></p>';
-    return rows;
+  return rows;
+};
 
-  };
+/**Refresh the baord */
 
-  var updateBoard = function (state) {
+var updateBoard = function(state) {
+  var gameBoard = document.querySelector("#board");
+  if (!gameBoard) return;
+  gameBoard.innerHTML = buildBoard(state || currentState);
+};
 
-    var board = document.querySelector('#board')
-    if(!board) return;
-    board.innerHTML = buildBoard(state || currentState);
-  };
+/**Render 5x5 field */
 
-  var renderTurn = function (square) {
+var renderTurn = function(square) {
+  var selected = square.getAttribute("data-id");
+  if (!selected) return;
 
-    var selected = square.getAttribute('data-id');
-    if(!selected) return;
+  currentState[selected] = turn;
+  updateBoard();
+  turn = turn === "X" ? "O" : "X";
+};
 
-    currentState[selected] = turn;
-    updateBoard();
-    turn = turn === 'X' ? 'O' : 'X';
+/** Clears the board */
 
-  };
+var resetBoard = function() {
+  currentState = baseState();
+  turn = "X";
+  updateBoard();
+};
 
- /** Clears the board */
+//Recall function
 
-  var resetBoard = function () {
+resetBoard();
 
-    currentState = baseState();
-    turn = 'X';
-    updateBoard();
-  };
+/** Click function to set X or O*/
 
-  resetBoard();
-
-  /** Click function to set X or O*/
-
-  document.addEventListener('click', function (event) {
-
-    if (event.target.matches('.game-sqaure') && !event.target.hasAttribute('disabled')) {
+document.addEventListener(
+  "click",
+  function(event) {
+    if (
+      event.target.matches(".game-sqaure") &&
+      !event.target.hasAttribute("disabled")
+    ) {
       renderTurn(event.target);
     }
 
-  });
+    /** Recall function for play again */
 
-};
+    if (event.target.matches("#play-again")) {
+      resetBoard();
+    }
+  },
+  false
+);
