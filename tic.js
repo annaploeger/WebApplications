@@ -123,9 +123,11 @@ var buildSquares = function(state, winner) {
 var buildBoard = function(state) {
   var winner = isWinner();
 
-  var rows = winner
-    ? "<p><strong>" + winner + " is the winner!</string></p>"
-    : "";
+  //var rows = winner
+  //? "<p><strong>" + winner + " is the winner!</string></p>"
+  //: "";
+  //alert(rows);
+  var rows = "";
   rows += "<table><tbody>";
 
   rows += buildSquares(state, winner);
@@ -137,9 +139,12 @@ var buildBoard = function(state) {
 /**Refresh the baord */
 
 var updateBoard = function(state) {
+  //debugger;
   var gameBoard = document.querySelector("#board");
   if (!gameBoard) return;
   gameBoard.innerHTML = buildBoard(state || currentState);
+  var winner = isWinner();
+  if (winner) alert(winner + " is the winner.");
 };
 
 /**Render 5x5 field */
