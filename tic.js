@@ -101,14 +101,14 @@ var buildSquares = function(state, winner) {
     /** Click on the fields */
 
     rows +=
-      '<td><button class="game-sqaure" data-id= "' +
+      '<td><p id="tic">Click me.<"' +
       id +
       '"' +
       selected +
       disabled +
       ">" +
       value +
-      "</button></td>";
+      "</element></td>";
 
     if (isLastInRow(id)) {
       rows += "</tr>";
@@ -172,7 +172,7 @@ resetBoard();
 
 /** Click function to set X or O*/
 
-document.addEventListener(
+document.getElementById("tic").addEventListener(
   "click",
   function(event) {
     if (
