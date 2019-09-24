@@ -101,7 +101,7 @@ var buildSquares = function(state, winner) {
     /** Click on the fields */
 
     rows +=
-      '<td><p id="tic">Click me.<"' +
+      '<td><p id="tic"> <"' +
       id +
       '"' +
       selected +
@@ -172,7 +172,7 @@ resetBoard();
 
 /** Click function to set X or O*/
 
-document.getElementById("tic").addEventListener(
+document.addEventListener(
   "click",
   function(event) {
     if (
