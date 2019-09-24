@@ -101,14 +101,14 @@ var buildSquares = function(state, winner) {
     /** Click on the fields */
 
     rows +=
-      '<td><p id="tic"> <"' +
+      '<td id="tic"> <"' +
       id +
       '"' +
       selected +
       disabled +
       ">" +
       value +
-      "</element></td>";
+      "</td>";
 
     if (isLastInRow(id)) {
       rows += "</tr>";
