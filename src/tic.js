@@ -101,7 +101,7 @@ var buildSquares = function(state, winner) {
     /** Click on the fields */
 
     rows +=
-      '<td id="tic"> <"' +
+      '<td onclick="onCellClick()" id="cell-' +
       id +
       '"' +
       selected +
@@ -109,6 +109,8 @@ var buildSquares = function(state, winner) {
       ">" +
       value +
       "</td>";
+
+    console.log("rows: ", rows);
 
     if (isLastInRow(id)) {
       rows += "</tr>";
@@ -169,9 +171,10 @@ var resetBoard = function() {
 //Recall function
 
 resetBoard();
-
+function onCellClick() {
+  console.log("cell clicked");
+}
 /** Click function to set X or O*/
-
 document.addEventListener(
   "click",
   function(event) {
