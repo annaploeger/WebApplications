@@ -123,7 +123,7 @@ var buildSquares = function(state, winner) {
 /**Build the table and the play again button */
 
 var buildBoard = function(state) {
-  var winner = isWinner();
+  /*var winner = isWinner();
 
   //var rows = winner
   //? "<p><strong>" + winner + " is the winner!</string></p>"
@@ -135,7 +135,7 @@ var buildBoard = function(state) {
   rows += buildSquares(state, winner);
   rows += '</tbody></table><p><button id="play-again">Play Again</button></p>';
 
-  return rows;
+  return rows; */
 };
 
 /**Refresh the baord */

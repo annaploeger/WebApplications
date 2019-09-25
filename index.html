@@ -1,76 +1,80 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<title>TicTacToe</title>
-		<meta charset="UTF-8" />
-	</head>
+<head>
+    <title>TicTacToe</title>
+    <meta charset="UTF-8"/>
+</head>
 
-	<style>
-	table{
-		boarder: 1px solid black;
-	}
-	</style>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        width: 100%;
+    }
 
-	<body>
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        height: 50px;
+        weight: 50px;
+    }
 
-		<h1 style="font-family: helvetica;"> Tic Tac Toe</h1>
+    #game-container {
+        width: 400px;
+        margin: 0 auto;
+        background-color: #ffffff;
+    }
 
-		<table>
-		<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td> </td>
-		<td> </td>
-		</tr>
+</style>
 
-		<tr>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		</tr>
+<body>
 
-		<tr>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		</tr>
+<h1 style="font-family: helvetica;"> Tic Tac Toe</h1>
+<div id="game-container">
+    <table>
 
-		<tr>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		</tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<script src="./src/tic.js">
 
-		<tr>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		</tr>
+</script>
 
-		<tr>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		<td> </td>
-		</tr>
-
-		</table>
-
-		<script src = "./src/tic.js">
-
-		</script>
-
-	</body>
+</body>
 
 </html>
