@@ -95,14 +95,16 @@ var onCellClick = function() {
   var square = this;
   renderTurn(square);
   var winner = isWinner();
-  if (winner) {
-    alert(winner + " is the winner.");
+  if (winner === "X") {
+    alert("Player 1 won!");
+  } else {
+    alert("Player 2 won!");
   }
 };
 
 var initGame = function() {
   turn = "X";
-  var gameContainer = document.getElementById("game-container");
+  var gameContainer = document.getElementById("board");
   gameContainer.innerHTML = "";
   var board = document.createElement("table");
   var identifier = 0;
