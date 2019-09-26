@@ -30,7 +30,9 @@ var baseState = function() {
   ];
 };
 
-var currentState, turn;
+var currentState,
+  turn,
+  isGameOver = false;
 var BOARD_SIZE = 5;
 /**Check if there is a winner*/
 
@@ -84,6 +86,7 @@ var renderTurn = function(square) {
 /** Clears the board */
 
 var resetBoard = function() {
+  isGameOver = false;
   currentState = baseState();
   turn = "X";
   initGame();
@@ -92,13 +95,19 @@ var resetBoard = function() {
 //Recall function
 
 var onCellClick = function() {
-  var square = this;
-  renderTurn(square);
-  var winner = isWinner();
-  if (winner === "X") {
-    alert("Player 1 won!");
-  } else {
-    alert("Player 2 won!");
+  if (!isGameOver) {
+    var square = this;
+    renderTurn(square);
+    var winner = isWinner();
+    console.log(winner);
+    if (winner) {
+      if (winner === "X") {
+        alert("Player 1 won!");
+      } else {
+        alert("Player 2 won!");
+      }
+      isGameOver = true;
+    }
   }
 };
 
