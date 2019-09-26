@@ -120,22 +120,13 @@ var buildSquares = function(state, winner) {
   return rows;
 };
 
-/**Build the table and the play again button */
+/**Build the play again button */
 
 var buildBoard = function(state) {
-  /*var winner = isWinner();
-
-  //var rows = winner
-  //? "<p><strong>" + winner + " is the winner!</string></p>"
-  //: "";
-  //alert(rows);
-  var rows = "";
-  rows += "<table><tbody>";
-
-  rows += buildSquares(state, winner);
-  rows += '</tbody></table><p><button id="play-again">Play Again</button></p>';
-
-  return rows; */
+  var button;
+  //Play-Again Button
+  button += '<p><button id="play-again">Play Again</button></p>';
+  return button;
 };
 
 /**Refresh the baord */
@@ -148,6 +139,18 @@ var updateBoard = function(state) {
   var winner = isWinner();
   if (winner) alert(winner + " is the winner.");
 };
+
+/**var tds = document.getElementByTagName("td");
+
+var getCellID = function() {
+    var el = this;
+    while ((el = el.onCellClick()) && el.nodeName.toUpperCase() !== 'id');
+    console.log(el.id);//Cell ID on console
+};
+
+for (var i = 0; i < tds.length; i++) {
+  tds[i].onclick = renderTurn(); //render Method decides then to set X/O
+}*/
 
 /**Render 5x5 field */
 
@@ -174,6 +177,7 @@ resetBoard();
 function onCellClick() {
   console.log("cell clicked");
 }
+
 /** Click function to set X or O*/
 document.addEventListener(
   "click",
