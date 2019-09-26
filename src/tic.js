@@ -96,9 +96,9 @@ var onCellClick = function() {
   renderTurn(square);
   var winner = isWinner();
   if (winner === "X") {
-    alert("Player 2 won!");
-  } else {
     alert("Player 1 won!");
+  } else {
+    alert("Player 2 won!");
   }
 };
 
