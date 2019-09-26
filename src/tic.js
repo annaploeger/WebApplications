@@ -31,7 +31,7 @@ var baseState = function() {
 };
 
 var currentState, turn;
-
+var BOARD_SIZE = 5;
 /**Check if there is a winner*/
 
 var isWinner = function() {
@@ -65,101 +65,19 @@ var isWinner = function() {
   return isWinner.length > 0 ? currentState[isWinner[0][0]] : false;
 };
 
-/**
- * @param return id
- * Check first and last row */
-
-var isFirstInRow = function(id) {
-  if (id === 0 || id === 5 || id === 10 || id === 15 || id === 20) {
-    return id;
-  }
-};
-
-var isLastInRow = function(id) {
-  if (id === 4 || id === 9 || id === 14 || id === 24) {
-    return id;
-  }
-};
-
-/** @param return the rows, to click on
- * Build the field*/
-
-var buildSquares = function(state, winner) {
-  var rows = "";
-
-  /** Check how the partially field is marked */
-
-  state.forEach(function(square, id) {
-    var value = square ? square : "";
-    var selected = square ? 'aria-pressed="true"' : "";
-    var disabled = square || winner ? " disabled" : "";
-
-    if (isFirstInRow(id)) {
-      rows += "<tr>";
-    }
-
-    /** Click on the fields */
-
-    rows +=
-      '<td onclick="onCellClick()" id="cell-' +
-      id +
-      '"' +
-      selected +
-      disabled +
-      ">" +
-      value +
-      "</td>";
-
-    console.log("rows: ", rows);
-
-    if (isLastInRow(id)) {
-      rows += "</tr>";
-    }
-  });
-
-  return rows;
-};
-
-/**Build the play again button */
-
-var buildBoard = function(state) {
-  var button;
-  //Play-Again Button
-  button += '<p><button id="play-again">Play Again</button></p>';
-  return button;
-};
-
 /**Refresh the baord */
 
-var updateBoard = function(state) {
-  //debugger;
-  var gameBoard = document.querySelector("#board");
-  if (!gameBoard) return;
-  gameBoard.innerHTML = buildBoard(state || currentState);
-  var winner = isWinner();
-  if (winner) alert(winner + " is the winner.");
+var updateBoard = function(square) {
+  if (square) square.innerHTML = turn;
 };
-
-/**var tds = document.getElementByTagName("td");
-
-var getCellID = function() {
-    var el = this;
-    while ((el = el.onCellClick()) && el.nodeName.toUpperCase() !== 'id');
-    console.log(el.id);//Cell ID on console
-};
-
-for (var i = 0; i < tds.length; i++) {
-  tds[i].onclick = renderTurn(); //render Method decides then to set X/O
-}*/
 
 /**Render 5x5 field */
 
 var renderTurn = function(square) {
-  var selected = square.getAttribute("data-id");
-  if (!selected) return;
-
-  currentState[selected] = turn;
-  updateBoard();
+  var selected = square.innerHTML;
+  if (selected) return;
+  currentState[square.identifier] = turn;
+  updateBoard(square);
   turn = turn === "X" ? "O" : "X";
 };
 
@@ -168,32 +86,49 @@ var renderTurn = function(square) {
 var resetBoard = function() {
   currentState = baseState();
   turn = "X";
-  updateBoard();
+  initGame();
 };
 
 //Recall function
 
+var onCellClick = function() {
+  var square = this;
+  renderTurn(square);
+  var winner = isWinner();
+  if (winner) {
+    alert(winner + " is the winner.");
+  }
+};
+
+var initGame = function() {
+  turn = "X";
+  var gameContainer = document.getElementById("game-container");
+  gameContainer.innerHTML = "";
+  var board = document.createElement("table");
+  var identifier = 0;
+  for (var i = 0; i < BOARD_SIZE; i++) {
+    var row = document.createElement("tr");
+    board.appendChild(row);
+    for (var j = 0; j < BOARD_SIZE; j++) {
+      var cell = document.createElement("td");
+      cell.identifier = identifier;
+      cell.addEventListener("click", onCellClick);
+      row.appendChild(cell);
+      identifier += 1;
+    }
+  }
+  gameContainer.appendChild(board).appendChild(buildPlayAgainBtn());
+};
+
+var buildPlayAgainBtn = function() {
+  var paragraphElement = document.createElement("p");
+  var button = document.createElement("button");
+  button.innerHTML = "Play Again";
+  button.addEventListener("click", resetBoard);
+  paragraphElement.appendChild(button);
+  //Play-Again Button
+  //button += '<p><button id="play-again">Play Again</button></p>';
+  return paragraphElement;
+};
+
 resetBoard();
-function onCellClick() {
-  console.log("cell clicked");
-}
-
-/** Click function to set X or O*/
-document.addEventListener(
-  "click",
-  function(event) {
-    if (
-      event.target.matches(".game-sqaure") &&
-      !event.target.hasAttribute("disabled")
-    ) {
-      renderTurn(event.target);
-    }
-
-    /** Recall function for play again */
-
-    if (event.target.matches("#play-again")) {
-      resetBoard();
-    }
-  },
-  false
-);
