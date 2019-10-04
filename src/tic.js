@@ -34,6 +34,8 @@ var currentState,
   turn,
   isGameOver = false;
 var BOARD_SIZE = 5;
+var timeInterval = null;
+var width = 1;
 /**Check if there is a winner*/
 
 var isWinner = function() {
@@ -78,11 +80,26 @@ var updateBoard = function(square) {
 var renderTurn = function(square) {
   var selected = square.innerHTML;
   if (selected) return;
+  clearInterval(timeInterval);
+  resetTimer();
+  timeCountDown(10);
   currentState[square.identifier] = turn;
   updateBoard(square);
+  applyCellColor(square);
   turn = turn === "X" ? "O" : "X";
 };
 
+var resetTimer = function() {
+  document.getElementById("timer").innerHTML = "00:10";
+};
+
+var applyCellColor = function(sqaure) {
+  if (turn === "X") {
+    sqaure.classList.add("green");
+  } else {
+    sqaure.classList.add("red");
+  }
+};
 /** Clears the board */
 
 var resetBoard = function() {
@@ -129,6 +146,9 @@ var initGame = function() {
     }
   }
   gameContainer.appendChild(board).appendChild(buildPlayAgainBtn());
+  clearInterval(timeInterval);
+  resetTimer();
+  timeCountDown(10);
 };
 
 var buildPlayAgainBtn = function() {
@@ -140,6 +160,40 @@ var buildPlayAgainBtn = function() {
   //Play-Again Button
   //button += '<p><button id="play-again">Play Again</button></p>';
   return paragraphElement;
+};
+
+var timeCountDown = function(duration) {
+  var timer = duration,
+    minutes,
+    seconds;
+  timeInterval = setInterval(function() {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    width *= 10;
+    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+
+    updateProgressBar(width);
+    if (--timer < 0) {
+      timer = duration;
+      turn = turn === "X" ? "O" : "X";
+    }
+  }, 1000);
+};
+
+var updateProgressBar = function(width) {
+  var elem = document.getElementById("myBar");
+  // var width = 1;
+  // var id = setInterval(frame, 10);
+  //function frame() {
+  if (width >= 100) {
+    width = 1;
+  } else {
+    elem.style.width = width + "%";
+  }
+  // }
 };
 
 resetBoard();

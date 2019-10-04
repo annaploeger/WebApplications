@@ -4,34 +4,18 @@
 <head>
     <title>TicTacToe</title>
     <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="src/tic.css">
 </head>
 
-<style>
-    table {
-        font-family: arial, sans-serif;
-        width: 100%;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-        height: 50px;
-        weight: 50px;
-        cursor: pointer;
-    }
-
-    #game-container {
-        width: 400px;
-        margin: 0 auto;
-        background-color: #ffffff;
-    }
-
-</style>
 
 <body>
 
-<h1 style="font-family: helvetica;"> Tic Tac Toe</h1>
+<h1> Tic Tac Toe</h1>
+<div id="timer"></div>
+<div class="light-grey">
+    <div id="myBar" class="progress-green" style="height:24px;width:0"></div>
+</div>
+<br/>
 <div id="board">
 
 </div>

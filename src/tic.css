@@ -1,0 +1,39 @@
+body {
+  font-family: Helvetica;
+}
+
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+  vertical-align: center;
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+#game-container {
+  width: 400px;
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+
+.green {
+  background-color: rgb(124, 252, 0);
+}
+
+.red {
+  background-color: rgb(250, 128, 114);
+}
+
+.light-grey {
+  color: #000 !important;
+  background-color: #f1f1f1 !important;
+}
+
+.progress-green {
+  color: #fff !important;
+  background-color: #4caf50 !important;
+}
