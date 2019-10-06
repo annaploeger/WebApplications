@@ -83,6 +83,7 @@ var renderTurn = function(square) {
   clearInterval(timeInterval);
   resetTimer();
   timeCountDown(10);
+  updateProgressBar(width);
   currentState[square.identifier] = turn;
   updateBoard(square);
   applyCellColor(square);
@@ -149,6 +150,7 @@ var initGame = function() {
   clearInterval(timeInterval);
   resetTimer();
   timeCountDown(10);
+  updateProgressBar(width);
 };
 
 var buildPlayAgainBtn = function() {
@@ -172,20 +174,21 @@ var timeCountDown = function(duration) {
 
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
-    width *= 10;
+    width += 9;
     document.getElementById("timer").innerHTML = minutes + ":" + seconds;
 
     updateProgressBar(width);
     if (--timer < 0) {
       timer = duration;
       turn = turn === "X" ? "O" : "X";
+      width = 0;
     }
   }, 1000);
 };
 
 var updateProgressBar = function(width) {
   var elem = document.getElementById("myBar");
-  // var width = 1;
+  //var width = 1;
   // var id = setInterval(frame, 10);
   //function frame() {
   if (width >= 100) {
