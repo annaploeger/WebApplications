@@ -35,7 +35,7 @@ var currentState,
   isGameOver = false;
 var BOARD_SIZE = 5;
 var timeInterval = null;
-var width = 1;
+var width = 0;
 /**Check if there is a winner*/
 
 var isWinner = function() {
@@ -83,10 +83,11 @@ var renderTurn = function(square) {
   clearInterval(timeInterval);
   resetTimer();
   timeCountDown(10);
-  updateProgressBar(width);
+  //updateProgressBar(width);
   currentState[square.identifier] = turn;
   updateBoard(square);
   applyCellColor(square);
+  width = 0;
   turn = turn === "X" ? "O" : "X";
 };
 
@@ -174,12 +175,13 @@ var timeCountDown = function(duration) {
 
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
-    width += 9;
+    width += 10;
     document.getElementById("timer").innerHTML = minutes + ":" + seconds;
 
     updateProgressBar(width);
     if (--timer < 0) {
       timer = duration;
+      width = 0;
       turn = turn === "X" ? "O" : "X";
     }
   }, 1000);
@@ -187,15 +189,12 @@ var timeCountDown = function(duration) {
 
 var updateProgressBar = function(width) {
   var elem = document.getElementById("myBar");
-  //var width = 1;
-  // var id = setInterval(frame, 10);
-  //function frame() {
-  if (width >= 100) {
-    width = 1;
-  } else {
-    elem.style.width = width + "%";
+  if (width > 100) {
+    width = 0;
   }
-  // }
+
+  if (width === 10) elem.style.width = 0 + "%";
+  else elem.style.width = width + "%";
 };
 
 resetBoard();
