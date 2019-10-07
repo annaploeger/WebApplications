@@ -11,9 +11,14 @@ td {
   font-size: 30px;
   border: 1px solid black;
   text-align: center;
-  height: 62px;
-  width: 62px;
+  height: 60px;
+  width: 60px;
   cursor: pointer;
+}
+
+button {
+  width: 60px;
+  height: auto;
 }
 
 .green {
