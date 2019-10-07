@@ -7,18 +7,22 @@ table {
 }
 
 td {
-  border: 1px solid black;
-  text-align: center;
-  height: 59px;
-  width: 59px;
-  cursor: pointer;
-  font-size: 30px;
+  width: 60px;
+  height: 60px;
+}
+tr {
+  width: 60px;
+  height: 60px;
 }
 
-#game-container {
-  width: 400px;
-  margin: 0 auto;
-  background-color: #ffffff;
+tr,
+td {
+  font-size: 30px;
+  border: 1px solid black;
+  text-align: center;
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
 }
 
 .green {
