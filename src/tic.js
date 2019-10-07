@@ -181,7 +181,6 @@ var timeCountDown = function(duration) {
     if (--timer < 0) {
       timer = duration;
       turn = turn === "X" ? "O" : "X";
-      width = 0;
     }
   }, 1000);
 };
