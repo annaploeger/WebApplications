@@ -29,12 +29,14 @@ button {
   background-color: rgb(250, 128, 114);
 }
 
-.light-grey {
+.progress {
+  /*light-grey*/
   color: #000 !important;
   background-color: #f1f1f1 !important;
 }
 
-.progress-green {
+.determinate {
+  /*progress-green*/
   color: #fff !important;
   background-color: #4caf50 !important;
 }
